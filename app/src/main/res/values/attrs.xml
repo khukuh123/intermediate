@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StoryEditText">
+        <attr name="storyInputType" format="enum">
+            <enum name="email" value="0x00000000"/>
+            <enum name="password" value="0x00000001"/>
+            <enum name="normal" value="0x00000002"/>
+        </attr>
+        <attr name="storyLabel" format="string"/>
+        <attr name="storyMultiline" format="boolean"/>
+    </declare-styleable>
+
+    <style name="StoryEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_rounded_black_8dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+</resources>

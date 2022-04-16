@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Story</string>
+    <string name="error_email_not_matched">Email doesn\'t matched pattern</string>
+    <string name="error_password_must_be_longer">Password must be 6 character or longer</string>
+    <string name="label_password">Password</string>
+    <string name="label_email">Email</string>
+    <string name="action_login">Login</string>
+    <string name="label_story">Story.</string>
+    <string name="action_register">Register</string>
+    <string name="label_name">Name</string>
+    <string name="title_login">Login</string>
+    <string name="title_register">Register</string>
+    <string name="error_fill_required_field">Please fill the required field</string>
+    <string name="title_story_detail">Story Detail</string>
+    <string name="title_add_story">Add Story</string>
+    <string name="action_camera">Camera</string>
+    <string name="action_gallery">Gallery</string>
+    <string name="label_description">Description</string>
+    <string name="action_upload">Upload</string>
+    <string name="content_add_story">Add Story</string>
+</resources>

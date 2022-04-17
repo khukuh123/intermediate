@@ -20,18 +20,15 @@ class MembershipViewModel(private val storyUseCase: StoryUseCase) : ViewModel() 
     val registerResult: LiveData<Resource<Boolean>> get() = _registerResult
     val loginResult: LiveData<Resource<User>> get() = _loginResult
 
-    init {
-        _registerResult.value = Resource.Loading()
-        _loginResult.value = Resource.Loading()
-    }
-
     fun register(registerParam: RegisterParam) {
+        _registerResult.value = Resource.Loading()
         viewModelScope.collectResult(_registerResult) {
             storyUseCase.register(registerParam)
         }
     }
 
     fun login(loginParam: LoginParam) {
+        _loginResult.value = Resource.Loading()
         viewModelScope.collectResult(_loginResult) {
             storyUseCase.login(loginParam)
         }

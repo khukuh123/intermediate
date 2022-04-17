@@ -2,18 +2,13 @@ package com.miko.story.presentation.membership
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.miko.story.R
 import com.miko.story.base.BaseActivity
 import com.miko.story.databinding.ActivityLoginBinding
 import com.miko.story.domain.model.LoginParam
 import com.miko.story.presentation.story.StoryActivity
-import com.miko.story.utils.SettingPreferences
-import com.miko.story.utils.observe
-import com.miko.story.utils.setupToolbar
-import com.miko.story.utils.showToast
-import kotlinx.coroutines.flow.collect
+import com.miko.story.utils.*
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,16 +27,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     override fun setupUI() {
         setupToolbar(getString(R.string.title_login), false)
+        setLoadingDialog(getLoadingDialog(this))
+        setErrorDialog(getErrorDialog(this))
     }
 
     override fun setupAction() {
-        with(binding){
+        with(binding) {
             btnLogin.setOnClickListener {
-                if(edtEmail.isValid && edtPassword.isValid){
-                    membershipViewModel.login(LoginParam(edtEmail.text, edtPassword.text))
-                }else{
-                    showToast(getString(R.string.error_fill_required_field))
-                }
+                login()
             }
             btnRegister.setOnClickListener {
                 RegisterActivity.start(this@LoginActivity)
@@ -55,24 +48,39 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun setupObserver() {
         membershipViewModel.loginResult.observe(this,
             onLoading = {
-                showToast("Loading")
+                showLoading()
             },
             onSuccess = {
-                lifecycleScope.launch{ settingPreferences.setToken(it.token) }
+                dismissLoading()
+                lifecycleScope.launch { settingPreferences.setToken(it.token) }
                 StoryActivity.start(this)
             },
             onError = {
-                showToast(it)
+                dismissLoading()
+                showErrorDialog(it){
+                    login()
+                }
             }
         )
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             settingPreferences.getToken().collect {
-                if (it.isNotEmpty()) StoryActivity.start(this@LoginActivity)
+                dismissLoading()
+                StoryActivity.start(this@LoginActivity)
             }
         }
     }
 
-    companion object{
+    private fun login() {
+       with(binding) {
+            if (edtEmail.isValid && edtPassword.isValid) {
+                membershipViewModel.login(LoginParam(edtEmail.text, edtPassword.text))
+            } else {
+                showToast(getString(R.string.error_fill_required_field))
+            }
+        }
+    }
+
+    companion object {
         @JvmStatic
         fun start(context: Context) {
             context.startActivity(Intent(context, LoginActivity::class.java).apply {

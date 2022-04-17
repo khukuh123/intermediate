@@ -1,9 +1,6 @@
 package com.miko.story.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import com.miko.story.BuildConfig
 import com.miko.story.data.StoryDataStore
 import com.miko.story.data.StoryRepository
@@ -13,17 +10,20 @@ import com.miko.story.domain.StoryUseCase
 import com.miko.story.presentation.membership.MembershipViewModel
 import com.miko.story.presentation.story.StoryViewModel
 import com.miko.story.utils.AppConst
-import com.miko.story.utils.PreferenceUtil
 import com.miko.story.utils.SettingPreferences
 import com.miko.story.utils.dataStore
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
+import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 val networkModule = module {
@@ -38,17 +38,27 @@ val networkModule = module {
 
     single {
         OkHttpClient.Builder()
-//            .addInterceptor { chain ->
-//                val original: Request = chain.request()
-//
-//                val request = original.newBuilder()
-//                    .addHeader("Authorization", "token ${AppConst.GITHUB_API_KEY}")
-//                    .method(original.method, original.body)
-//                    .build()
-//
-//                chain.proceed(request)
-//            }
+            .addInterceptor { chain ->
+                return@addInterceptor try {
+                    chain.proceed(chain.request())
+                } catch (e: Throwable) {
+                    Response.Builder()
+                        .message(e.message ?: "")
+                        .code(999)
+                        .protocol(Protocol.HTTP_2)
+                        .body("""
+                            {
+                                "message": "${("""\$\\"'""".toRegex().replace(e.message ?: "", """\"""")).replace("\"", """\"""")}"
+                            }
+                        """.trimIndent().toResponseBody()
+                        )
+                        .request(chain.request())
+                        .build()
+                }
+            }
             .addInterceptor(interceptor = get(named(httpLogging)))
+            .connectTimeout(120, TimeUnit.SECONDS)
+            .connectTimeout(120, TimeUnit.SECONDS)
             .build()
     }
 

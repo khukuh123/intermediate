@@ -18,7 +18,7 @@ interface StoryApiClient {
     @GET("stories")
     suspend fun getAllStories(@Header("Authorization") token: String): Response<StoriesResponse>
 
-    @POST("stories")
+    @POST("stories?size=0")
     @Multipart
     suspend fun addStory(@Header("Authorization") token: String, @Part("description") description: RequestBody, @Part image: MultipartBody.Part): Response<BaseResponse>
 }

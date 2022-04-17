@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.core.app.ActivityOptionsCompat
 import com.miko.story.R
 import com.miko.story.base.BaseActivity
 import com.miko.story.databinding.ActivityStoryDetailBinding
@@ -53,10 +54,12 @@ class StoryDetailActivity : BaseActivity<ActivityStoryDetailBinding>() {
 
     companion object{
         @JvmStatic
-        fun start(context: Context, story: Story) {
+        fun start(context: Context, story: Story, activityOptionsCompat: ActivityOptionsCompat) {
             context.startActivity(Intent(context, StoryDetailActivity::class.java).apply {
                 putExtra(BundleKeys.STORY, story)
-            })
+            },
+                activityOptionsCompat.toBundle()
+            )
         }
     }
 }

@@ -14,7 +14,6 @@ import com.miko.story.base.BaseActivity
 import com.miko.story.databinding.ActivityAddStoryBinding
 import com.miko.story.domain.model.AddStoryParam
 import com.miko.story.utils.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,6 +52,8 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
 
     override fun setupUI() {
         setupToolbar(getString(R.string.title_add_story), true)
+        setLoadingDialog(getLoadingDialog(this))
+        setErrorDialog(getErrorDialog(this))
     }
 
     override fun setupAction() {
@@ -72,17 +73,13 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
                 galleryLauncher.launch(Intent.createChooser(intent, getString(R.string.label_choose_a_picture)))
             }
             btnUpload.setOnClickListener {
-                imageFile?.let {
-                    storyViewModel.addStory(
-                        AddStoryParam(edtDescription.text, it, token)
-                    )
-                }
+                upload()
             }
         }
     }
 
     override fun setupProcess() {
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             settingPreferences.getToken().collect {
                 token = it
             }
@@ -92,13 +89,17 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
     override fun setupObserver() {
         storyViewModel.uploadResult.observe(this,
             onLoading = {
-                showToast( "Loading")
+                showLoading()
             },
             onSuccess = {
+                dismissLoading()
                 StoryActivity.start(this)
             },
             onError = {
-                showToast(it)
+                dismissLoading()
+                showErrorDialog(it){
+                    upload()
+                }
             }
         )
     }
@@ -113,6 +114,18 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
     private fun setPreviewImage(path: String) {
         val imageBitmap = BitmapFactory.decodeFile(path)
         binding.imgStory.setImageBitmap(imageBitmap)
+    }
+
+    private fun upload(){
+        with(binding){
+            if(imageFile != null && edtDescription.text.isNotEmpty()){
+                storyViewModel.addStory(
+                    AddStoryParam(edtDescription.text, imageFile!!, token)
+                )
+            }else{
+                showToast(getString(R.string.error_fill_required_field))
+            }
+        }
     }
 
     companion object {

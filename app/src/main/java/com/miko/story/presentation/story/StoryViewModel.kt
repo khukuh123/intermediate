@@ -19,16 +19,17 @@ class StoryViewModel(private val storyUseCase: StoryUseCase) : ViewModel() {
 
     init {
         _storiesResult.value = Resource.Loading()
-        _uploadResult.value = Resource.Loading()
     }
 
     fun getAllStories(token: String) {
+        _storiesResult.value = Resource.Loading()
         viewModelScope.collectResult(_storiesResult) {
             storyUseCase.getAllStories(token)
         }
     }
 
     fun addStory(addStoryParam: AddStoryParam){
+        _uploadResult.value = Resource.Loading()
         viewModelScope.collectResult(_uploadResult){
             storyUseCase.addStory(addStoryParam)
         }

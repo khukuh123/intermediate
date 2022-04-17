@@ -25,4 +25,9 @@
     <style name="StoryShape">
         <item name="cornerSize">16dp</item>
     </style>
+
+    <style name="StoryLoadingDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowMinWidthMajor">40%</item>
+        <item name="android:windowMinWidthMinor">40%</item>
+    </style>
 </resources>

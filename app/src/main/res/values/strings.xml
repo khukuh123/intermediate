@@ -15,10 +15,14 @@
     <string name="title_add_story">Add Story</string>
     <string name="action_camera">Camera</string>
     <string name="action_gallery">Gallery</string>
-    <string name="label_description">Description</string>
+    <string name="label_description">Description (required)</string>
     <string name="action_upload">Upload</string>
     <string name="content_add_story">Add Story</string>
     <string name="menu_logout">Logout</string>
     <string name="message_registration_success">Registration success, please login with account you registered</string>
     <string name="label_choose_a_picture">Choose a picture</string>
+    <string name="action_retry">Retry</string>
+    <string name="label_error">Error</string>
+    <string name="empty_stories">It\'s empty</string>
+    <string name="empty_stories_message">Looks like everyone has not added their story yet</string>
 </resources>

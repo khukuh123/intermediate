@@ -27,7 +27,7 @@ class StoryEditText @JvmOverloads constructor(
     private val binding get() = mBinding!!
     private var mIsValid = false
     val isValid get() = mIsValid
-    val text get() = binding.edtStory.text
+    val text get() = binding.edtStory.text?.toString() ?: ""
 
     private val validations: MutableList<Validation> = mutableListOf()
     private var storyInputType = StoryInputType.EMAIL.value

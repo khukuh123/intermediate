@@ -1,4 +1,4 @@
-package com.miko.story.data.util
+package com.miko.story.domain.util
 
 sealed class Resource<T>(
     open val data: T? = null,

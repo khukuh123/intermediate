@@ -10,15 +10,6 @@ import com.miko.story.utils.setupToolbar
 
 class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
 
-    companion object{
-        @JvmStatic
-        fun start(context: Context) {
-            context.startActivity(Intent(context, AddStoryActivity::class.java).apply {
-
-            })
-        }
-    }
-
     override fun getViewBinding(): ActivityAddStoryBinding =
         ActivityAddStoryBinding.inflate(layoutInflater)
 
@@ -57,5 +48,14 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object{
+        @JvmStatic
+        fun start(context: Context) {
+            context.startActivity(Intent(context, AddStoryActivity::class.java).apply {
+
+            })
+        }
     }
 }

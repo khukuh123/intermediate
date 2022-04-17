@@ -16,7 +16,7 @@ import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.miko.story.R
-import com.miko.story.data.util.Resource
+import com.miko.story.domain.util.Resource
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols

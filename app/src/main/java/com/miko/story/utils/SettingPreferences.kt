@@ -4,35 +4,30 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 
-class SettingPreferences private constructor(private val dataStore: DataStore<Preferences>) {
+class SettingPreferences(private val dataStore: DataStore<Preferences>) {
 
-    private val darkModeKey = booleanPreferencesKey(PreferenceUtil.DARK_MODE_KEY)
+    private val tokenKey = stringPreferencesKey(PreferenceUtil.TOKEN_KEY)
 
-    fun getDarkModeSetting(): Flow<Boolean> {
+    suspend fun getToken(): Flow<String>{
         return dataStore.data.map { preferences ->
-            preferences[darkModeKey] ?: false
+            preferences[tokenKey] ?: ""
         }
     }
 
-    suspend fun setDarkModeSetting(isDarkMode: Boolean) {
+    suspend fun setToken(token: String) {
         dataStore.edit { preferences ->
-            preferences[darkModeKey] = isDarkMode
+            preferences[tokenKey] = token
         }
     }
 
-    companion object {
-        @Volatile
-        private var INSTANCE: SettingPreferences? = null
-
-        @JvmStatic
-        fun getInstance(dataStore: DataStore<Preferences>): SettingPreferences =
-            INSTANCE ?: synchronized(this) {
-                val instance = SettingPreferences(dataStore)
-                INSTANCE = instance
-                instance
-            }
+    suspend fun clearToken(){
+        dataStore.edit { preferences ->
+            preferences[tokenKey] = ""
+        }
     }
 }

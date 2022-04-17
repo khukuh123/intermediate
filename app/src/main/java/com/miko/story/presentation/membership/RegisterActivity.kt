@@ -3,23 +3,18 @@ package com.miko.story.presentation.membership
 import android.content.Context
 import android.content.Intent
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.miko.story.R
 import com.miko.story.base.BaseActivity
 import com.miko.story.databinding.ActivityRegisterBinding
 import com.miko.story.presentation.story.StoryActivity
+import com.miko.story.utils.observe
 import com.miko.story.utils.setupToolbar
 import com.miko.story.utils.showToast
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
 
-    companion object{
-        @JvmStatic
-        fun start(context: Context) {
-            context.startActivity(Intent(context, RegisterActivity::class.java).apply {
-
-            })
-        }
-    }
+    private val membershipViewModel: MembershipViewModel by viewModels()
 
     override fun getViewBinding(): ActivityRegisterBinding =
         ActivityRegisterBinding.inflate(layoutInflater)
@@ -33,12 +28,12 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
     }
 
     override fun setupAction() {
-        with(binding){
+        with(binding) {
             btnRegister.setOnClickListener {
-                val name = (edtName.text ?: "").isNotEmpty()
-                if(name && edtEmail.isValid && edtPassword.isValid){
+                val name = edtName.text.isNotEmpty()
+                if (name && edtEmail.isValid && edtPassword.isValid) {
                     StoryActivity.start(this@RegisterActivity)
-                }else{
+                } else {
                     showToast(getString(R.string.error_fill_required_field))
                 }
             }
@@ -50,17 +45,33 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
     }
 
     override fun setupObserver() {
-
-    }
-
-    private fun isValid(){
-
+        membershipViewModel.registerResult.observe(this,
+            onLoading = {
+                showToast("Loading")
+            },
+            onSuccess = {
+                showToast(getString(R.string.message_registration_success))
+                LoginActivity.start(this)
+            },
+            onError = {
+                showToast(it)
+            }
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        @JvmStatic
+        fun start(context: Context) {
+            context.startActivity(Intent(context, RegisterActivity::class.java).apply {
+
+            })
+        }
     }
 }

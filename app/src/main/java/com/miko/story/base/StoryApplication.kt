@@ -1,10 +1,7 @@
 package com.miko.story.base
 
 import android.app.Application
-import com.miko.story.di.networkModule
-import com.miko.story.di.repositoryModule
-import com.miko.story.di.useCaseModule
-import com.miko.story.di.viewModelModule
+import com.miko.story.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,6 +18,7 @@ class StoryApplication: Application() {
                     networkModule,
                     repositoryModule,
                     useCaseModule,
+                    dataStoreModule,
                     viewModelModule
                 )
             )

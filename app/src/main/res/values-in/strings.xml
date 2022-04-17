@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cerita</string>
+    <string name="error_email_not_matched">Email tidak cocok dengan pola</string>
+    <string name="error_password_must_be_longer">Sandi harus 6 karakter atau lebih</string>
+    <string name="label_password">Sandi</string>
+    <string name="label_email">Email</string>
+    <string name="action_login">Masuk</string>
+    <string name="label_story">Cerita.</string>
+    <string name="action_register">Daftar</string>
+    <string name="label_name">Nama</string>
+    <string name="title_login">Masuk</string>
+    <string name="title_register">Daftar</string>
+    <string name="error_fill_required_field">Mohon mengisi kolom yang diminta</string>
+    <string name="title_story_detail">Detail Cerita</string>
+    <string name="title_add_story">Tambahkan Cerita</string>
+    <string name="action_camera">Kamera</string>
+    <string name="action_gallery">Galeri</string>
+    <string name="label_description">Deskripsi (wajib)</string>
+    <string name="action_upload">Unggah</string>
+    <string name="content_add_story">Tambah Cerita</string>
+    <string name="menu_logout">Keluar</string>
+    <string name="message_registration_success">Pendaftaran sukses, mohon login dengan akun yang didaftarkan</string>
+    <string name="label_choose_a_picture">Pilih sebuah gambar</string>
+    <string name="action_retry">Coba Lagi</string>
+    <string name="label_error">Gagal</string>
+    <string name="empty_stories">Kosong euy</string>
+    <string name="empty_stories_message">Kayanya belum ada yang upload cerita nih</string>
+    <string name="menu_language">Bahasa</string>
+</resources>

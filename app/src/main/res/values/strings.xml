@@ -25,4 +25,5 @@
     <string name="label_error">Error</string>
     <string name="empty_stories">It\'s empty</string>
     <string name="empty_stories_message">Looks like everyone has not added their story yet</string>
+    <string name="menu_language">Language</string>
 </resources>

@@ -2,6 +2,7 @@ package com.miko.story.presentation.story
 
 import android.content.Context
 import android.content.Intent
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.app.ActivityOptionsCompat
@@ -71,15 +72,15 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
             },
             onSuccess = {
                 dismissLoading()
-                if(it.isEmpty()){
+                if (it.isEmpty()) {
                     binding.msvStories.showEmptyList(getString(R.string.empty_stories), getString(R.string.empty_stories_message))
-                }else{
+                } else {
                     storyAdapter.submitList(it)
                 }
             },
             onError = {
                 dismissLoading()
-                showErrorDialog(it){
+                showErrorDialog(it) {
                     setupProcess()
                 }
             }
@@ -98,6 +99,9 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
                     settingPreferences.clearToken()
                     LoginActivity.start(this@StoryActivity)
                 }
+            }
+            R.id.menu_language -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
         }
         return super.onOptionsItemSelected(item)

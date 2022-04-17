@@ -11,6 +11,7 @@ import com.miko.story.data.remote.StoryApiClient
 import com.miko.story.domain.StoryInteractor
 import com.miko.story.domain.StoryUseCase
 import com.miko.story.presentation.membership.MembershipViewModel
+import com.miko.story.presentation.story.StoryViewModel
 import com.miko.story.utils.AppConst
 import com.miko.story.utils.PreferenceUtil
 import com.miko.story.utils.SettingPreferences
@@ -76,5 +77,6 @@ val dataStoreModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { MembershipViewModel(get(), get()) }
+    viewModel { MembershipViewModel(get()) }
+    viewModel { StoryViewModel(get()) }
 }

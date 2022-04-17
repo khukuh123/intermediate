@@ -13,10 +13,15 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.miko.story.R
 import com.miko.story.domain.util.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -95,5 +100,14 @@ fun AppCompatActivity.setupToolbar(title: String, showBack: Boolean){
     supportActionBar?.apply{
         this.title = title
         setDisplayHomeAsUpEnabled(showBack)
+    }
+}
+
+fun <T> CoroutineScope.collectResult(liveData: MutableLiveData<T>, block: suspend () -> Flow<T>){
+    this.launch {
+        val result = block.invoke()
+        result.collect{
+            liveData.postValue(it)
+        }
     }
 }

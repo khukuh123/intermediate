@@ -12,18 +12,22 @@ import com.miko.story.databinding.ActivityStoryBinding
 import com.miko.story.presentation.membership.LoginActivity
 import com.miko.story.presentation.story.adapter.StoryAdapter
 import com.miko.story.utils.SettingPreferences
+import com.miko.story.utils.observe
 import com.miko.story.utils.setupToolbar
+import com.miko.story.utils.showToast
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StoryActivity : BaseActivity<ActivityStoryBinding>() {
 
     private val storyAdapter: StoryAdapter by lazy {
-        StoryAdapter{
-
+        StoryAdapter {
+            StoryDetailActivity.start(this, it)
         }
     }
     private val settingPreferences: SettingPreferences by inject()
+    private val storyViewModel: StoryViewModel by viewModel()
 
     override fun getViewBinding(): ActivityStoryBinding = ActivityStoryBinding.inflate(layoutInflater)
 
@@ -37,7 +41,7 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
     }
 
     override fun setupAction() {
-        with(binding){
+        with(binding) {
             fabAddStory.setOnClickListener {
                 AddStoryActivity.start(this@StoryActivity)
             }
@@ -45,11 +49,25 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
     }
 
     override fun setupProcess() {
-
+        lifecycleScope.launch {
+            settingPreferences.getToken().collect {
+                storyViewModel.getAllStories(it)
+            }
+        }
     }
 
     override fun setupObserver() {
-
+        storyViewModel.storiesResult.observe(this,
+            onLoading = {
+                showToast("Loading")
+            },
+            onSuccess = {
+                storyAdapter.submitList(it)
+            },
+            onError = {
+                showToast(it)
+            }
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -58,9 +76,9 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.menu_logout -> {
-                lifecycleScope.launch{
+                lifecycleScope.launch {
                     settingPreferences.clearToken()
                     LoginActivity.start(this@StoryActivity)
                 }
@@ -70,7 +88,7 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
     }
 
     private fun setupRecyclerView() {
-        with(binding){
+        with(binding) {
             rvStory.apply {
                 layoutManager = LinearLayoutManager(this@StoryActivity, LinearLayoutManager.VERTICAL, false)
                 adapter = storyAdapter
@@ -78,7 +96,7 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
         }
     }
 
-    companion object{
+    companion object {
         @JvmStatic
         fun start(context: Context) {
             context.startActivity(Intent(context, StoryActivity::class.java).apply {

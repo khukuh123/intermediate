@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import com.miko.story.R
 import com.miko.story.base.BaseActivity
 import com.miko.story.databinding.ActivityRegisterBinding
-import com.miko.story.presentation.story.StoryActivity
+import com.miko.story.domain.model.RegisterParam
 import com.miko.story.utils.observe
 import com.miko.story.utils.setupToolbar
 import com.miko.story.utils.showToast
@@ -32,7 +32,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
             btnRegister.setOnClickListener {
                 val name = edtName.text.isNotEmpty()
                 if (name && edtEmail.isValid && edtPassword.isValid) {
-                    StoryActivity.start(this@RegisterActivity)
+                    membershipViewModel.register(
+                        RegisterParam(
+                            edtName.text,
+                            edtEmail.text,
+                            edtPassword.text
+                        )
+                    )
                 } else {
                     showToast(getString(R.string.error_fill_required_field))
                 }

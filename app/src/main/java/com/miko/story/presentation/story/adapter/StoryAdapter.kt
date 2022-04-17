@@ -15,7 +15,7 @@ class StoryAdapter(
     inner class ViewHolder(mBinding: ItemStoryBinding) : BaseViewHolder<Story, ItemStoryBinding>(mBinding){
         override fun bind(data: Story) {
             with(binding){
-                imgStory.setImageFromUrl(data.storyUrl)
+                imgStory.setImageFromUrl(data.photoUrl)
                 tvName.text = data.name
                 root.setOnClickListener {
                     onItemClicked.invoke(data)

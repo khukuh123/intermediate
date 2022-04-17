@@ -3,6 +3,7 @@ package com.miko.story.data
 import com.miko.story.data.remote.StoryApiClient
 import com.miko.story.data.remote.response.LoginResponse
 import com.miko.story.data.remote.response.RegisterResponse
+import com.miko.story.data.remote.response.StoriesResponse
 import com.miko.story.data.util.ApiResult
 import com.miko.story.domain.model.LoginParam
 import com.miko.story.domain.model.RegisterParam
@@ -20,6 +21,11 @@ class StoryDataStore(private val api: StoryApiClient) : StoryRepository {
 
     override suspend fun login(loginParam: LoginParam): Flow<ApiResult<LoginResponse>> =
         api.login(loginParam.map()).call()
+
+    override suspend fun getAllStories(token: String): Flow<ApiResult<StoriesResponse>>{
+        val modifiedToken = "Bearer $token"
+        return api.getAllStories(modifiedToken).call()
+    }
 
     private fun <T> Response<T>.call() =
         flow<ApiResult<T>> {

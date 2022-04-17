@@ -26,8 +26,8 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
-            imageFile?.let {
-                setPreviewImage(it.absolutePath)
+            imageFile?.let { file ->
+                setPreviewImage(file.absolutePath)
             }
         }
     }
@@ -35,8 +35,8 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
         if (it.resultCode == RESULT_OK) {
             val selectedImageUri = it.data?.data as Uri
             imageFile = FileUtils.uriToFile(selectedImageUri, this)
-            imageFile?.let {
-                setPreviewImage(it.absolutePath)
+            imageFile?.let { file ->
+                setPreviewImage(file.absolutePath)
             }
         }
     }
@@ -97,7 +97,7 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
             },
             onError = {
                 dismissLoading()
-                showErrorDialog(it){
+                showErrorDialog(it) {
                     upload()
                 }
             }
@@ -116,13 +116,13 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
         binding.imgStory.setImageBitmap(imageBitmap)
     }
 
-    private fun upload(){
-        with(binding){
-            if(imageFile != null && edtDescription.text.isNotEmpty()){
+    private fun upload() {
+        with(binding) {
+            if (imageFile != null && edtDescription.text.isNotEmpty()) {
                 storyViewModel.addStory(
                     AddStoryParam(edtDescription.text, imageFile!!, token)
                 )
-            }else{
+            } else {
                 showToast(getString(R.string.error_fill_required_field))
             }
         }

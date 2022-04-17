@@ -2,7 +2,6 @@ package com.miko.story.base
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
@@ -51,7 +50,7 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
         errorDialog?.apply {
             this.setTitle(getString(R.string.label_error))
             setMessage(message)
-            setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_retry)){ dialog, _ ->
+            setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_retry)) { dialog, _ ->
                 onRetry.invoke()
                 dialog.dismiss()
             }

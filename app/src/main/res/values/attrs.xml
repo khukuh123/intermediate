@@ -2,12 +2,12 @@
 <resources>
     <declare-styleable name="StoryEditText">
         <attr name="storyInputType" format="enum">
-            <enum name="email" value="0x00000000"/>
-            <enum name="password" value="0x00000001"/>
-            <enum name="normal" value="0x00000002"/>
+            <enum name="email" value="0x00000000" />
+            <enum name="password" value="0x00000001" />
+            <enum name="normal" value="0x00000002" />
         </attr>
-        <attr name="storyLabel" format="string"/>
-        <attr name="storyMultiline" format="boolean"/>
+        <attr name="storyLabel" format="string" />
+        <attr name="storyMultiline" format="boolean" />
     </declare-styleable>
 
     <style name="StoryEditText" parent="Widget.AppCompat.EditText">

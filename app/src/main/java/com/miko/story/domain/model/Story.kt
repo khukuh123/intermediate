@@ -8,5 +8,5 @@ data class Story(
     val id: String,
     val photoUrl: String,
     val name: String,
-    val description: String
-): Parcelable
+    val description: String,
+) : Parcelable

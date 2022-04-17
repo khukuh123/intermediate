@@ -4,11 +4,11 @@ import com.miko.story.data.StoryRepository
 import com.miko.story.data.util.ApiResult
 import com.miko.story.domain.model.*
 import com.miko.story.domain.util.Resource
-import com.miko.story.domain.util.StoryMapper.map
+import com.miko.story.domain.util.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class StoryInteractor(private val repository: StoryRepository): StoryUseCase {
+class StoryInteractor(private val repository: StoryRepository) : StoryUseCase {
     override suspend fun register(registerParam: RegisterParam): Flow<Resource<Boolean>> =
         repository.register(registerParam).mapToDomain {
             true
@@ -31,9 +31,13 @@ class StoryInteractor(private val repository: StoryRepository): StoryUseCase {
 
     private fun <T, U> Flow<ApiResult<T>>.mapToDomain(mapper: (T) -> U): Flow<Resource<U>> =
         this.map {
-            when(it){
-                is ApiResult.Success -> { Resource.Success(mapper.invoke(it.result!!)) }
-                else -> { Resource.Error(it.errorCode ?: 999, it.errorMessage ?: "") }
+            when (it) {
+                is ApiResult.Success -> {
+                    Resource.Success(mapper.invoke(it.result!!))
+                }
+                else -> {
+                    Resource.Error(it.errorCode ?: 999, it.errorMessage ?: "")
+                }
             }
         }
 }

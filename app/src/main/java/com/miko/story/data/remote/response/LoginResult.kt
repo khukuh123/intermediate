@@ -9,5 +9,5 @@ data class LoginResult(
     @SerializedName("token")
     val token: String?,
     @SerializedName("userId")
-    val userId: String?
+    val userId: String?,
 )

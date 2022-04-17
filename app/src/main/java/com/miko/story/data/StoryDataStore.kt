@@ -9,7 +9,7 @@ import com.miko.story.data.util.ApiResult
 import com.miko.story.domain.model.AddStoryParam
 import com.miko.story.domain.model.LoginParam
 import com.miko.story.domain.model.RegisterParam
-import com.miko.story.domain.util.StoryMapper.map
+import com.miko.story.domain.util.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,10 +19,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okio.IOException
 import org.json.JSONObject
 import retrofit2.Response
-import java.lang.Exception
 
 class StoryDataStore(private val api: StoryApiClient) : StoryRepository {
     override suspend fun register(registerParam: RegisterParam): Flow<ApiResult<BaseResponse>> =

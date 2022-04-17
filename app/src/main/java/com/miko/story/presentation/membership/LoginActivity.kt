@@ -57,7 +57,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             },
             onError = {
                 dismissLoading()
-                showErrorDialog(it){
+                showErrorDialog(it) {
                     login()
                 }
             }
@@ -71,7 +71,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun login() {
-       with(binding) {
+        with(binding) {
             if (edtEmail.isValid && edtPassword.isValid) {
                 membershipViewModel.login(LoginParam(edtEmail.text, edtPassword.text))
             } else {

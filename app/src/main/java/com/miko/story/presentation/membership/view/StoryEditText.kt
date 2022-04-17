@@ -65,22 +65,23 @@ class StoryEditText @JvmOverloads constructor(
                     }
                     addValidation(MinLengthValidation(6, context.getString(R.string.error_password_must_be_longer)))
                 }
-                else -> {
-                    if(multiline){
+                StoryInputType.NORMAL.value -> {
+                    if (multiline) {
                         edtStory.apply {
                             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
                             gravity = Gravity.START or Gravity.TOP
                         }
-                    }else{
+                    } else {
                         edtStory.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
                     }
                     tvError.gone()
                 }
+                else -> throw IllegalStateException("StoryInputType unknown")
             }
 
             tvLabel.text = label
 
-            if(storyInputType == StoryInputType.PASSWORD.value && showPasswordImage != null){
+            if (storyInputType == StoryInputType.PASSWORD.value && showPasswordImage != null) {
                 edtStory.setOnTouchListener { v, event ->
                     var isClearButtonClicked = false
                     if (layoutDirection == View.LAYOUT_DIRECTION_RTL) {
@@ -107,7 +108,7 @@ class StoryEditText @JvmOverloads constructor(
                 }
             }
 
-            if(validations.isNotEmpty()) {
+            if (validations.isNotEmpty()) {
                 edtStory.addTextChangedListener {
                     validate(it?.toString() ?: "")
                 }
@@ -115,8 +116,8 @@ class StoryEditText @JvmOverloads constructor(
         }
     }
 
-    private fun setShowPassword(){
-        with(binding){
+    private fun setShowPassword() {
+        with(binding) {
             if (isPasswordShowed) {
                 edtStory.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
                 showPasswordImage = ContextCompat.getDrawable(context, R.drawable.ic_eye_closed)
@@ -148,7 +149,7 @@ class StoryEditText @JvmOverloads constructor(
                     break
                 } else {
                     if (tvError.text.isNotEmpty()) tvError.text = ""
-                    if(i == validations.lastIndex) mIsValid = true
+                    if (i == validations.lastIndex) mIsValid = true
                 }
             }
         }

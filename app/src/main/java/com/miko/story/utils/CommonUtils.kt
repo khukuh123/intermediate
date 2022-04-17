@@ -1,20 +1,17 @@
 package com.miko.story.utils
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ShareCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.miko.story.R
@@ -22,10 +19,6 @@ import com.miko.story.domain.util.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.math.RoundingMode
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
-import java.util.*
 
 fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -45,24 +38,6 @@ fun ImageView.setImageFromUrl(image: String, size: Int? = null) {
     Glide.with(this).load(image).apply(request).into(this)
 }
 
-fun Int.formatShorter(): String {
-    val result: Float = this.toFloat() / 1000.toFloat()
-    val decimalFormat = DecimalFormat("#.#").apply {
-        roundingMode = RoundingMode.FLOOR
-        decimalFormatSymbols = DecimalFormatSymbols(Locale.getDefault()).apply {
-            decimalSeparator = '.'
-        }
-    }
-    return when {
-        result >= 1.0 -> {
-            "${decimalFormat.format(result)}K"
-        }
-        else -> {
-            "$this"
-        }
-    }
-}
-
 fun <T> LiveData<Resource<T>>.observe(
     lifecycleOwner: LifecycleOwner,
     onLoading: () -> Unit,
@@ -78,35 +53,19 @@ fun <T> LiveData<Resource<T>>.observe(
     }
 }
 
-fun String.replaceWithDashIfEmpty(): String =
-    this.ifEmpty { "-" }
-
-fun Context.share(shareText: String) {
-    val intent = ShareCompat.IntentBuilder(this)
-        .setType("text/plain")
-        .setText(shareText)
-//        .setChooserTitle(getString(R.string.share_title_user))
-        .createChooserIntent()
-    try {
-        startActivity(intent)
-    } catch (e: ActivityNotFoundException) {
-//        this.showToast(getString(R.string.error_share_app_not_found))
-    }
-}
-
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PreferenceUtil.PREFERENCES_NAME)
 
-fun AppCompatActivity.setupToolbar(title: String, showBack: Boolean){
-    supportActionBar?.apply{
+fun AppCompatActivity.setupToolbar(title: String, showBack: Boolean) {
+    supportActionBar?.apply {
         this.title = title
         setDisplayHomeAsUpEnabled(showBack)
     }
 }
 
-fun <T> CoroutineScope.collectResult(liveData: MutableLiveData<T>, block: suspend () -> Flow<T>){
+fun <T> CoroutineScope.collectResult(liveData: MutableLiveData<T>, block: suspend () -> Flow<T>) {
     this.launch {
         val result = block.invoke()
-        result.collect{
+        result.collect {
             liveData.postValue(it)
         }
     }

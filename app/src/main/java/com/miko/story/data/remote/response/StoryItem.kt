@@ -17,5 +17,5 @@ data class StoryItem(
     @SerializedName("name")
     val name: String?,
     @SerializedName("photoUrl")
-    val photoUrl: String?
+    val photoUrl: String?,
 )

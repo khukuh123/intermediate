@@ -1,7 +1,7 @@
 package com.miko.story.data.remote
 
-import com.miko.story.data.remote.response.LoginResponse
 import com.miko.story.data.remote.response.BaseResponse
+import com.miko.story.data.remote.response.LoginResponse
 import com.miko.story.data.remote.response.StoriesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -20,5 +20,9 @@ interface StoryApiClient {
 
     @POST("stories?size=0")
     @Multipart
-    suspend fun addStory(@Header("Authorization") token: String, @Part("description") description: RequestBody, @Part image: MultipartBody.Part): Response<BaseResponse>
+    suspend fun addStory(
+        @Header("Authorization") token: String,
+        @Part("description") description: RequestBody,
+        @Part image: MultipartBody.Part,
+    ): Response<BaseResponse>
 }

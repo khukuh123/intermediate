@@ -28,9 +28,9 @@ class StoryViewModel(private val storyUseCase: StoryUseCase) : ViewModel() {
         }
     }
 
-    fun addStory(addStoryParam: AddStoryParam){
+    fun addStory(addStoryParam: AddStoryParam) {
         _uploadResult.value = Resource.Loading()
-        viewModelScope.collectResult(_uploadResult){
+        viewModelScope.collectResult(_uploadResult) {
             storyUseCase.addStory(addStoryParam)
         }
     }

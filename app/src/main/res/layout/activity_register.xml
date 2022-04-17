@@ -4,54 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.membership.RegisterActivity"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    tools:context=".presentation.membership.RegisterActivity">
 
     <com.miko.story.presentation.membership.view.StoryEditText
         android:id="@+id/edtName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/edtEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:storyInputType="normal"
-        app:storyLabel="@string/label_name"/>
+        app:storyLabel="@string/label_name" />
 
     <com.miko.story.presentation.membership.view.StoryEditText
         android:id="@+id/edtEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtName"
-        app:layout_constraintBottom_toTopOf="@id/edtPassword"
-        app:storyInputType="email"
         android:layout_marginTop="20dp"
-        app:storyLabel="@string/label_email"/>
+        app:layout_constraintBottom_toTopOf="@id/edtPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtName"
+        app:storyInputType="email"
+        app:storyLabel="@string/label_email" />
 
     <com.miko.story.presentation.membership.view.StoryEditText
         android:id="@+id/edtPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtEmail"
-        app:layout_constraintBottom_toTopOf="@id/btnRegister"
-        app:storyInputType="password"
         android:layout_marginTop="4dp"
-        app:storyLabel="@string/label_password"/>
+        app:layout_constraintBottom_toTopOf="@id/btnRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtEmail"
+        app:storyInputType="password"
+        app:storyLabel="@string/label_password" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
         android:text="@string/action_register"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,6 +38,9 @@ class StoryMapActivity : BaseActivity<ActivityStoryMapBinding>(), OnMapReadyCall
 
     private lateinit var mapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
+    private lateinit var token: String
+    private var index = 1
+    private var storiesCount = 0
 
     override fun getViewBinding(): ActivityStoryMapBinding =
         ActivityStoryMapBinding.inflate(layoutInflater)
@@ -56,19 +59,23 @@ class StoryMapActivity : BaseActivity<ActivityStoryMapBinding>(), OnMapReadyCall
     }
 
     override fun setupAction() {
-
+        binding.btnLoadMore.setOnClickListener {
+            index++
+            getStoriesMaps()
+        }
     }
 
     override fun setupProcess() {
         lifecycleScope.launch {
             settingPreferences.getToken().collect {
-                storyViewModel.getAllStories(it, StoriesParam(true, 20))
+                token = it
+                getStoriesMaps()
             }
         }
     }
 
     override fun setupObserver() {
-        storyViewModel.storiesResult.observe(this,
+        storyViewModel.mapsResult.observe(this,
             onLoading = {
                 showLoading()
             },
@@ -115,6 +122,10 @@ class StoryMapActivity : BaseActivity<ActivityStoryMapBinding>(), OnMapReadyCall
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getStoriesMaps() {
+        storyViewModel.getStoriesMaps(token, StoriesParam(true, 10, index))
+    }
+
     private fun enableCurrentLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map.isMyLocationEnabled = true
@@ -124,6 +135,9 @@ class StoryMapActivity : BaseActivity<ActivityStoryMapBinding>(), OnMapReadyCall
     }
 
     private fun setStoriesMarker(stories: List<Story>) {
+        storiesCount += stories.size
+        val storiesCount = getString(R.string.label_stories_count, storiesCount)
+        binding.tvStoriesCounter.text = storiesCount
         val storiesGrouped = stories.groupBy {
             it.latLng
         }

@@ -22,9 +22,10 @@ fun AddStoryParam.map(): Map<String, RequestBody> =
 
 fun StoriesParam.map(): Map<String, Int> =
     mutableMapOf<String, Int>().apply {
-        this["location"] = if (this@map.location) 1 else 0
+        if(this@map.location != null) this["location"] = if (this@map.location) 1 else 0
         this["size"] = this@map.size
-    }
+        this["page"] = this@map.page
+     }
 
 fun StoryItem.map() =
     Story(

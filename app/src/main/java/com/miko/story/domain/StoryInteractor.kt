@@ -10,34 +10,14 @@ import kotlinx.coroutines.flow.map
 
 class StoryInteractor(private val repository: StoryRepository) : StoryUseCase {
     override suspend fun register(registerParam: RegisterParam): Flow<Resource<Boolean>> =
-        repository.register(registerParam).mapToDomain {
-            true
-        }
+        repository.register(registerParam)
 
     override suspend fun login(loginParam: LoginParam): Flow<Resource<User>> =
-        repository.login(loginParam).mapToDomain {
-            it.loginResult?.map()!!
-        }
+        repository.login(loginParam)
 
     override suspend fun getAllStories(token: String, storiesParam: StoriesParam): Flow<Resource<List<Story>>> =
-        repository.getAllStories(token, storiesParam).mapToDomain { response ->
-            response.listStory?.map { it.map() }.orEmpty()
-        }
+        repository.getAllStories(token, storiesParam)
 
     override suspend fun addStory(addStoryParam: AddStoryParam): Flow<Resource<Boolean>> =
-        repository.addStory(addStoryParam).mapToDomain {
-            true
-        }
-
-    private fun <T, U> Flow<ApiResult<T>>.mapToDomain(mapper: (T) -> U): Flow<Resource<U>> =
-        this.map {
-            when (it) {
-                is ApiResult.Success -> {
-                    Resource.Success(mapper.invoke(it.result!!))
-                }
-                else -> {
-                    Resource.Error(it.errorCode ?: 999, it.errorMessage ?: "")
-                }
-            }
-        }
+        repository.addStory(addStoryParam)
 }

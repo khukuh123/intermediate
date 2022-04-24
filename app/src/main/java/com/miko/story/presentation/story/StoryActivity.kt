@@ -7,15 +7,20 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import androidx.paging.PagingSource
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.miko.story.R
 import com.miko.story.base.BaseActivity
+import com.miko.story.base.StoryLoadingStateAdapter
 import com.miko.story.databinding.ActivityStoryBinding
 import com.miko.story.presentation.maps.StoryMapActivity
 import com.miko.story.presentation.membership.LoginActivity
 import com.miko.story.presentation.story.adapter.StoryAdapter
 import com.miko.story.utils.*
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -67,25 +72,27 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
     }
 
     override fun setupObserver() {
-        storyViewModel.storiesResult.observe(this,
-            onLoading = {
-                showLoading()
-            },
-            onSuccess = {
-                dismissLoading()
-                if (it.isEmpty()) {
-                    binding.msvStories.showEmptyList(getString(R.string.empty_stories), getString(R.string.empty_stories_message))
-                } else {
-                    storyAdapter.submitList(it)
+        storyViewModel.storiesResult.observe(this){
+            storyAdapter.submitData(lifecycle, it)
+        }
+        storyAdapter.addLoadStateListener {
+            when(val loadState = it.source.refresh){
+                is LoadState.Loading -> {
+                    if(storyAdapter.itemCount == 0) showLoading()
                 }
-            },
-            onError = {
-                dismissLoading()
-                showErrorDialog(it) {
-                    setupProcess()
+                is LoadState.NotLoading -> {
+                    dismissLoading()
+                    binding.msvStories.showContent()
+                }
+                is LoadState.Error -> {
+                    dismissLoading()
+                    if(storyAdapter.itemCount == 0) {
+                        showErrorDialog(loadState.error.message.orEmpty()) { storyAdapter.retry() }
+                        binding.msvStories.showEmptyList(getString(R.string.empty_story), getString(R.string.empty_story_message))
+                    }
                 }
             }
-        )
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -115,7 +122,9 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
         with(binding) {
             rvStory.apply {
                 layoutManager = LinearLayoutManager(this@StoryActivity, LinearLayoutManager.VERTICAL, false)
-                adapter = storyAdapter
+                adapter = storyAdapter.withLoadStateFooter(StoryLoadingStateAdapter{
+                    storyAdapter.retry()
+                })
             }
         }
     }

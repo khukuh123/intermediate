@@ -33,4 +33,8 @@
     <string name="label_add_location">Add location</string>
     <string name="error_current_location">Failed to get current location</string>
     <string name="label_location">Location: %1$.4f, %2$.4f</string>
+    <string name="action_load_more">Load More</string>
+    <string name="label_stories_count">Stories Count : %1$d</string>
+    <string name="empty_story_message">No one has upload story</string>
+    <string name="empty_story">It\'s empty</string>
 </resources>

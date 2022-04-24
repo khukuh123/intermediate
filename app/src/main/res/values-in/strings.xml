@@ -34,4 +34,8 @@
     <string name="label_add_location">Tambahkan lokasi</string>
     <string name="error_current_location">Gagal mendapatkan lokasi sekarang</string>
     <string name="label_location">Lokasi: %1$.4f, %2$.4f</string>
+    <string name="action_load_more">Muat lainnya</string>
+    <string name="label_stories_count">Jumlah Cerita: %1$d</string>
+    <string name="empty_story_message">Tidak satupun yang menunggah cerita</string>
+    <string name="empty_story">Sepertinya sepi?</string>
 </resources>

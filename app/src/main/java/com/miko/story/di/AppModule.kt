@@ -5,6 +5,8 @@ import com.google.android.gms.location.LocationServices
 import com.miko.story.BuildConfig
 import com.miko.story.data.StoryDataStore
 import com.miko.story.data.StoryRepository
+import com.miko.story.data.remote.IRemoteDataSource
+import com.miko.story.data.remote.RemoteDataSource
 import com.miko.story.data.remote.StoryApiClient
 import com.miko.story.domain.StoryInteractor
 import com.miko.story.domain.StoryUseCase
@@ -70,6 +72,10 @@ val networkModule = module {
             .client(get())
             .build()
         retrofit.create(StoryApiClient::class.java)
+    }
+
+    single<IRemoteDataSource> {
+        RemoteDataSource(get())
     }
 }
 

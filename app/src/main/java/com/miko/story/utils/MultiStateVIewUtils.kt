@@ -23,3 +23,7 @@ fun MultiStateView.showEmptyList(title: String? = null, message: String? = null,
         }
     }
 }
+
+fun MultiStateView.showContent() {
+    this.viewState = MultiStateView.ViewState.CONTENT
+}

@@ -27,4 +27,11 @@
     <string name="empty_stories">Kosong euy</string>
     <string name="empty_stories_message">Kayanya belum ada yang upload cerita nih</string>
     <string name="menu_language">Bahasa</string>
+    <string name="menu_maps">Peta</string>
+    <string name="title_maps">Peta</string>
+    <string name="error_permission_failed">Gagal mendapatkan izin</string>
+    <string name="error_parsing_map_style">Gagal mengurai gaya peta</string>
+    <string name="label_add_location">Tambahkan lokasi</string>
+    <string name="error_current_location">Gagal mendapatkan lokasi sekarang</string>
+    <string name="label_location">Lokasi: %1$.4f, %2$.4f</string>
 </resources>

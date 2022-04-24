@@ -1,14 +1,18 @@
 package com.miko.story.presentation.story
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.miko.story.R
 import com.miko.story.base.BaseActivity
 import com.miko.story.databinding.ActivityAddStoryBinding
@@ -23,6 +27,7 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
 
     private val storyViewModel: StoryViewModel by viewModel()
     private val settingPreferences: SettingPreferences by inject()
+    private val fusedLocationProviderClient: FusedLocationProviderClient by inject()
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
@@ -42,6 +47,7 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
     }
     private var imageFile: File? = null
     private var token: String = ""
+    private var location: Location? = null
 
     override fun getViewBinding(): ActivityAddStoryBinding =
         ActivityAddStoryBinding.inflate(layoutInflater)
@@ -74,6 +80,15 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
             }
             btnUpload.setOnClickListener {
                 upload()
+            }
+            swAddLocation.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    tvLocation.visible()
+                    getCurrentLocation()
+                } else {
+                    tvLocation.gone()
+                    location = null
+                }
             }
         }
     }
@@ -119,12 +134,24 @@ class AddStoryActivity : BaseActivity<ActivityAddStoryBinding>() {
     private fun upload() {
         with(binding) {
             if (imageFile != null && edtDescription.text.isNotEmpty()) {
-                storyViewModel.addStory(
-                    AddStoryParam(edtDescription.text, imageFile!!, token)
-                )
+                storyViewModel.addStory(AddStoryParam(edtDescription.text, imageFile!!, token, location))
             } else {
                 showToast(getString(R.string.error_fill_required_field))
             }
+        }
+    }
+
+    private fun getCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            fusedLocationProviderClient.lastLocation
+                .addOnSuccessListener {
+                    location = it
+                    binding.tvLocation.text = getString(R.string.label_location, it.latitude, it.longitude)
+                }.addOnFailureListener {
+                    showToast(getString(R.string.error_current_location))
+                }
         }
     }
 

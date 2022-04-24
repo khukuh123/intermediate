@@ -26,4 +26,11 @@
     <string name="empty_stories">It\'s empty</string>
     <string name="empty_stories_message">Looks like everyone has not added their story yet</string>
     <string name="menu_language">Language</string>
+    <string name="menu_maps">Maps</string>
+    <string name="title_maps">Maps</string>
+    <string name="error_permission_failed">Failed to get the permission</string>
+    <string name="error_parsing_map_style">Failed to parsing map style</string>
+    <string name="label_add_location">Add location</string>
+    <string name="error_current_location">Failed to get current location</string>
+    <string name="label_location">Location: %1$.4f, %2$.4f</string>
 </resources>

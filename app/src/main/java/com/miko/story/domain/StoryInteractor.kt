@@ -19,8 +19,8 @@ class StoryInteractor(private val repository: StoryRepository) : StoryUseCase {
             it.loginResult?.map()!!
         }
 
-    override suspend fun getAllStories(token: String): Flow<Resource<List<Story>>> =
-        repository.getAllStories(token).mapToDomain { response ->
+    override suspend fun getAllStories(token: String, storiesParam: StoriesParam): Flow<Resource<List<Story>>> =
+        repository.getAllStories(token, storiesParam).mapToDomain { response ->
             response.listStory?.map { it.map() }.orEmpty()
         }
 

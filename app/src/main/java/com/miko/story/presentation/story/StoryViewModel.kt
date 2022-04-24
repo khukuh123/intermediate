@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miko.story.domain.StoryUseCase
 import com.miko.story.domain.model.AddStoryParam
+import com.miko.story.domain.model.StoriesParam
 import com.miko.story.domain.model.Story
 import com.miko.story.domain.util.Resource
 import com.miko.story.utils.collectResult
@@ -21,10 +22,10 @@ class StoryViewModel(private val storyUseCase: StoryUseCase) : ViewModel() {
         _storiesResult.value = Resource.Loading()
     }
 
-    fun getAllStories(token: String) {
+    fun getAllStories(token: String, storiesParam: StoriesParam = StoriesParam()) {
         _storiesResult.value = Resource.Loading()
         viewModelScope.collectResult(_storiesResult) {
-            storyUseCase.getAllStories(token)
+            storyUseCase.getAllStories(token, storiesParam)
         }
     }
 

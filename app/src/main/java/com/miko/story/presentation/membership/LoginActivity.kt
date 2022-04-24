@@ -57,9 +57,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             },
             onError = {
                 dismissLoading()
-                showErrorDialog(it) {
-                    login()
-                }
+                showErrorDialog(it) { }
             }
         )
         lifecycleScope.launch {

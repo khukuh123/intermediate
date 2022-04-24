@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.miko.story.R
 import com.miko.story.base.BaseActivity
 import com.miko.story.databinding.ActivityStoryBinding
+import com.miko.story.presentation.maps.StoryMapActivity
 import com.miko.story.presentation.membership.LoginActivity
 import com.miko.story.presentation.story.adapter.StoryAdapter
 import com.miko.story.utils.*
@@ -102,6 +103,9 @@ class StoryActivity : BaseActivity<ActivityStoryBinding>() {
             }
             R.id.menu_language -> {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            }
+            R.id.menu_maps -> {
+                StoryMapActivity.start(this)
             }
         }
         return super.onOptionsItemSelected(item)

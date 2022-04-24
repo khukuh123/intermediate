@@ -20,6 +20,7 @@ class StoryApplication : Application() {
                     networkModule,
                     repositoryModule,
                     useCaseModule,
+                    locationModule,
                     dataStoreModule,
                     viewModelModule
                 )

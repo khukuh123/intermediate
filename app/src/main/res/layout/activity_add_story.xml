@@ -30,7 +30,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="@string/action_camera"
-        app:layout_constraintBottom_toTopOf="@id/edtDescription"
+        app:layout_constraintBottom_toTopOf="@id/swAddLocation"
         app:layout_constraintEnd_toStartOf="@id/btnGallery"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgStory" />
@@ -46,15 +46,39 @@
         app:layout_constraintStart_toEndOf="@id/btnCamera"
         app:layout_constraintTop_toTopOf="@id/btnCamera" />
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/swAddLocation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/dimen_0dp"
+        android:text="@string/label_add_location"
+        app:layout_constraintBottom_toTopOf="@id/tvLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnCamera" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvLocation"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/edtDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/swAddLocation"
+        tools:text="Location: x.x y.y" />
+
     <com.miko.story.presentation.membership.view.StoryEditText
         android:id="@+id/edtDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@id/btnUpload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnCamera"
+        app:layout_constraintTop_toBottomOf="@id/tvLocation"
         app:storyInputType="normal"
         app:storyLabel="@string/label_description"
         app:storyMultiline="true" />

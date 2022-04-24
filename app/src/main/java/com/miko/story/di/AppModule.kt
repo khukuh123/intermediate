@@ -1,6 +1,7 @@
 package com.miko.story.di
 
 import android.content.Context
+import com.google.android.gms.location.LocationServices
 import com.miko.story.BuildConfig
 import com.miko.story.data.StoryDataStore
 import com.miko.story.data.StoryRepository
@@ -70,6 +71,10 @@ val networkModule = module {
             .build()
         retrofit.create(StoryApiClient::class.java)
     }
+}
+
+val locationModule = module {
+    single { LocationServices.getFusedLocationProviderClient(get<Context>()) }
 }
 
 val repositoryModule = module {

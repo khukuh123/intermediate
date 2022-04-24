@@ -9,6 +9,7 @@ import com.miko.story.data.util.ApiResult
 import com.miko.story.domain.model.AddStoryParam
 import com.miko.story.domain.model.LoginParam
 import com.miko.story.domain.model.RegisterParam
+import com.miko.story.domain.model.StoriesParam
 import com.miko.story.domain.util.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -29,17 +30,14 @@ class StoryDataStore(private val api: StoryApiClient) : StoryRepository {
     override suspend fun login(loginParam: LoginParam): Flow<ApiResult<LoginResponse>> =
         api.login(loginParam.map()).call()
 
-    override suspend fun getAllStories(token: String): Flow<ApiResult<StoriesResponse>> {
-        val modifiedToken = "Bearer $token"
-        return api.getAllStories(modifiedToken).call()
+    override suspend fun getAllStories(token: String, storiesParam: StoriesParam): Flow<ApiResult<StoriesResponse>> {
+        return api.getAllStories(token.addBearerToken(), storiesParam.map()).call()
     }
 
     override suspend fun addStory(addStoryParam: AddStoryParam): Flow<ApiResult<BaseResponse>> {
-        val description = addStoryParam.description.toRequestBody("text/plain".toMediaType())
         val file = addStoryParam.image.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart = MultipartBody.Part.createFormData("photo", addStoryParam.image.name, file)
-        val modifiedToken = "Bearer ${addStoryParam.token}"
-        return api.addStory(modifiedToken, description, imageMultipart).call()
+        return api.addStory(addStoryParam.token.addBearerToken(), addStoryParam.map(), imageMultipart).call()
     }
 
     private fun <T> Response<T>.call(): Flow<ApiResult<T>> =
@@ -64,4 +62,9 @@ class StoryDataStore(private val api: StoryApiClient) : StoryRepository {
                 emit(ApiResult.Error(999, e.message.orEmpty()))
             }
         }.flowOn(Dispatchers.IO)
+
+    private fun String.addBearerToken() =
+        StringBuilder()
+            .append("Bearer $this")
+            .toString()
 }

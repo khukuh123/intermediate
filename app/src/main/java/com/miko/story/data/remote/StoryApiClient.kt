@@ -16,13 +16,17 @@ interface StoryApiClient {
     suspend fun login(@Body requestBody: RequestBody): Response<LoginResponse>
 
     @GET("stories")
-    suspend fun getAllStories(@Header("Authorization") token: String): Response<StoriesResponse>
+    suspend fun getAllStories(
+        @Header("Authorization") token: String,
+        @QueryMap query: Map<String, Int>,
+    ): Response<StoriesResponse>
 
-    @POST("stories?size=0")
+    @POST("stories")
     @Multipart
+    @JvmSuppressWildcards
     suspend fun addStory(
         @Header("Authorization") token: String,
-        @Part("description") description: RequestBody,
+        @PartMap partMap: Map<String, RequestBody>,
         @Part image: MultipartBody.Part,
     ): Response<BaseResponse>
 }

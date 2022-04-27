@@ -19,9 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class StoryViewModel(private val storyUseCase: StoryUseCase) : ViewModel() {
-    private val _storiesResult: MutableLiveData<PagingData<Story>> = MutableLiveData<PagingData<Story>>().apply {
-        cachedIn(viewModelScope)
-    }
+    private val _storiesResult: MutableLiveData<PagingData<Story>> = MutableLiveData<PagingData<Story>>()
     private val _uploadResult: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     private val _mapsResult: MutableLiveData<Resource<List<Story>>> = MutableLiveData()
 
@@ -44,7 +42,7 @@ class StoryViewModel(private val storyUseCase: StoryUseCase) : ViewModel() {
                         storyUseCase.getAllStories(token, storiesParam.copy(size = loadSize, page = position))
                 }
             }
-        ).flow.let {
+        ).flow.cachedIn(viewModelScope).let {
             viewModelScope.launch {
                 it.collect {
                     _storiesResult.postValue(it)

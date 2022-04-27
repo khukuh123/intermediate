@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.maps.StoryMapActivity">
+    tools:context=".presentation.maps.StoryMapActivity"
+    tools:keep="@layout/activity_story_map">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mapFragment"
@@ -17,13 +18,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="16dp"
-        android:text="@string/action_load_more"/>
+        android:text="@string/action_load_more" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvStoriesCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start|top"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp" />
 
 </FrameLayout>

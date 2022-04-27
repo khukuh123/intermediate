@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 class StoryDataStore(private val remote: IRemoteDataSource) : StoryRepository {
     override suspend fun register(registerParam: RegisterParam): Flow<Resource<Boolean>> =
         remote.register(registerParam).mapToDomain {
-            true
+            it.map()
         }
 
     override suspend fun login(loginParam: LoginParam): Flow<Resource<User>> =
@@ -26,7 +26,7 @@ class StoryDataStore(private val remote: IRemoteDataSource) : StoryRepository {
 
     override suspend fun addStory(addStoryParam: AddStoryParam): Flow<Resource<Boolean>> =
         remote.addStory(addStoryParam).mapToDomain {
-            true
+            it.map()
         }
 
     private fun <T, U> Flow<ApiResult<T>>.mapToDomain(mapper: (T) -> U): Flow<Resource<U>> =

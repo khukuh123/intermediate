@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".presentation.story.StoryDetailActivity">
+    tools:context=".presentation.story.StoryDetailActivity"
+    tools:keep="@layout/activity_story_detail">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -4,10 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.miko.story.base.BaseAdapter
 import com.miko.story.base.BasePagingAdapter
 import com.miko.story.base.BasePagingViewHolder
-import com.miko.story.base.BaseViewHolder
 import com.miko.story.databinding.ItemStoryBinding
 import com.miko.story.domain.model.Story
 import com.miko.story.domain.util.StoryDiffUtil

@@ -1,39 +1,39 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Story</string>
     <string name="error_email_not_matched">Email doesn\'t matched pattern</string>
     <string name="error_password_must_be_longer">Password must be 6 character or longer</string>
-    <string name="label_password">Password</string>
-    <string name="label_email">Email</string>
-    <string name="action_login">Login</string>
-    <string name="label_story">Story.</string>
-    <string name="action_register">Register</string>
-    <string name="label_name">Name</string>
+    <string name="label_password" tools:keep="@string/label_password">Password</string>
+    <string name="label_email" tools:keep="@string/label_email">Email</string>
+    <string name="action_login" tools:keep="@string/action_login">Login</string>
+    <string name="label_story" tools:keep="@string/label_story">Story.</string>
+    <string name="action_register" tools:keep="@string/action_register">Register</string>
+    <string name="label_name" tools:keep="@string/label_name">Name</string>
     <string name="title_login">Login</string>
     <string name="title_register">Register</string>
     <string name="error_fill_required_field">Please fill the required field</string>
     <string name="title_story_detail">Story Detail</string>
     <string name="title_add_story">Add Story</string>
-    <string name="action_camera">Camera</string>
-    <string name="action_gallery">Gallery</string>
-    <string name="label_description">Description (required)</string>
-    <string name="action_upload">Upload</string>
-    <string name="content_add_story">Add Story</string>
+    <string name="action_camera" tools:keep="@string/action_camera">Camera</string>
+    <string name="action_gallery" tools:keep="@string/action_gallery">Gallery</string>
+    <string name="label_description" tools:keep="@string/label_description">Description (required)</string>
+    <string name="action_upload" tools:keep="@string/action_upload">Upload</string>
+    <string name="content_add_story" tools:keep="@string/content_add_story">Add Story</string>
     <string name="menu_logout">Logout</string>
     <string name="message_registration_success">Registration success, please login with account you registered</string>
     <string name="label_choose_a_picture">Choose a picture</string>
     <string name="action_retry">Retry</string>
     <string name="label_error">Error</string>
-    <string name="empty_stories">It\'s empty</string>
-    <string name="empty_stories_message">Looks like everyone has not added their story yet</string>
+    <string name="empty_stories" tools:keep="@string/empty_stories">It\'s empty</string>
+    <string name="empty_stories_message" tools:keep="@string/empty_stories_message">Looks like everyone has not added their story yet</string>
     <string name="menu_language">Language</string>
     <string name="menu_maps">Maps</string>
     <string name="title_maps">Maps</string>
     <string name="error_permission_failed">Failed to get the permission</string>
     <string name="error_parsing_map_style">Failed to parsing map style</string>
-    <string name="label_add_location">Add location</string>
+    <string name="label_add_location" tools:keep="@string/label_add_location">Add location</string>
     <string name="error_current_location">Failed to get current location</string>
     <string name="label_location">Location: %1$.4f, %2$.4f</string>
-    <string name="action_load_more">Load More</string>
+    <string name="action_load_more" tools:keep="@string/action_load_more">Load More</string>
     <string name="label_stories_count">Stories Count : %1$d</string>
     <string name="empty_story_message">No one has upload story</string>
     <string name="empty_story">It\'s empty</string>

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".presentation.story.AddStoryActivity">
+    tools:context=".presentation.story.AddStoryActivity"
+    tools:keep="@layout/activity_add_story">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgStory"

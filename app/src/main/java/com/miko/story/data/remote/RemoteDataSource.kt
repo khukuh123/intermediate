@@ -1,6 +1,5 @@
 package com.miko.story.data.remote
 
-import android.util.Log
 import com.miko.story.data.remote.response.BaseResponse
 import com.miko.story.data.remote.response.LoginResponse
 import com.miko.story.data.remote.response.StoriesResponse
@@ -40,13 +39,10 @@ class RemoteDataSource(private val api: StoryApiClient) : IRemoteDataSource {
     private fun <T> Response<T>.call(): Flow<ApiResult<T>> =
         flow<ApiResult<T>> {
             try {
-                Log.d("hitted", "Calling...")
                 val response = this@call
                 if (response.isSuccessful) {
-                    Log.d("hitted", "Successs!!")
                     emit(ApiResult.Success(response.body()!!))
                 } else {
-                    Log.d("hitted", "Failed")
                     with(response) {
                         errorBody()?.string()?.let { value ->
                             val message = JSONObject(value).getString("message")
@@ -55,7 +51,6 @@ class RemoteDataSource(private val api: StoryApiClient) : IRemoteDataSource {
                     }
                 }
             } catch (e: Exception) {
-                Log.d("hitted", "Error")
                 emit(ApiResult.Error(999, e.message.orEmpty()))
             }
         }.flowOn(Dispatchers.IO)

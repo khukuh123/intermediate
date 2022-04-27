@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
-    tools:context=".presentation.membership.RegisterActivity">
+    tools:context=".presentation.membership.RegisterActivity"
+    tools:keep="@layout/activity_register">
 
     <com.miko.story.presentation.membership.view.StoryEditText
         android:id="@+id/edtName"

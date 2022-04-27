@@ -22,7 +22,7 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
-    <style name="StoryShape">
+    <style name="StoryShape" tools:keep="@style/StoryShape">
         <item name="cornerSize">16dp</item>
     </style>
 

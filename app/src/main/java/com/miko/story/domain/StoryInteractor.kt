@@ -1,12 +1,9 @@
 package com.miko.story.domain
 
 import com.miko.story.data.StoryRepository
-import com.miko.story.data.util.ApiResult
 import com.miko.story.domain.model.*
 import com.miko.story.domain.util.Resource
-import com.miko.story.domain.util.map
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class StoryInteractor(private val repository: StoryRepository) : StoryUseCase {
     override suspend fun register(registerParam: RegisterParam): Flow<Resource<Boolean>> =
